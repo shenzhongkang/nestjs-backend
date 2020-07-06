@@ -1,3 +1,5 @@
+import { Algorithm } from 'jsonwebtoken';
+
 export interface AppProperties {
   db: {
     host: string;
@@ -12,7 +14,7 @@ export interface AppProperties {
   };
   token: {
     secret: string;
-    algorithm?: string;
+    algorithm?: Algorithm;
     expiresIn?: string;
   };
 }

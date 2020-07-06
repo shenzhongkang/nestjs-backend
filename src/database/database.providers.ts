@@ -8,14 +8,15 @@ export const databaseProviders: Provider[] = [
   {
     provide: DB_CONNECTION_TOKEN,
     inject: [CONFIG_TOKEN],
-    useFactory: async ({ db }: AppProperties): Promise<void> => {
-      await createConnection({
+    useFactory: async ({ db }: AppProperties) => {
+      return await createConnection({
         type: 'mysql',
         host: db.host,
         port: db.port,
         username: db.dbuser,
         password: db.dbpassword,
         database: db.dbname,
+        entities: [__dirname + '/../**/*.entity{.ts,.js}'],
         synchronize: true,
         logger: 'advanced-console'
       });

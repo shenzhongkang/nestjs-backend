@@ -4,12 +4,17 @@ import * as express from 'express';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 import { AppModule } from './app.module';
+import { AuthModule } from './auth/auth.module';
+import { AuthGuard } from './auth/auth.guard';
 
 async function bootstrap() {
   const app: INestApplication = await NestFactory.create(AppModule);
 
   app.use(express.json());
   app.useGlobalPipes(new ValidationPipe());
+
+  const authGuard = app.select(AuthModule).get(AuthGuard);
+  app.useGlobalGuards(authGuard);
 
   // config swagger
   const swaggerConfig = new DocumentBuilder()
